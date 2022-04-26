@@ -1,0 +1,159 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  text-align: center;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+button {
+  background-color: rgb(154, 154, 181);
+  border: 1px solid black;
+  cursor: pointer;
+  padding: 5px;
+}
+
+
+img {
+  width: 33.3333333%;
+  background-size: cover;
+
+}
+
+img:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.selected {
+  opacity: 0.5;
+}
+
+.gallery {
+  width: 90%;
+  height: 90%;
+}
+
+.smalimg {
+  width: 15%;
+}
+
+.modal {
+
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.modalActiv {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 80%;
+  height: 80%;
+  position: fixed;
+  background-color: rgb(255, 255, 255);
+  top: 10%;
+  left: 10%;
+
+
+}
+
+.modalbtn {
+  display: block;
+  width: 70px;
+  height: 20px;
+  margin: 0 auto;
+}
+
+.conceal {
+  transform: scale(0);
+}
+
+.modalWrap {
+
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+
+}
+
+.modalWrap img {
+  width: 100%;
+  height: 100%;
+
+}
+
+.modalActiv button {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.modalActiv img {
+  object-fit: contain
+}
+
+.modalbtn button {
+  display: block;
+  width: 70px;
+  height: 20px;
+
+}
+
+.app__main-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.main-container {
+  width: 900px;
+  height: 400px;
+  background-color: rgb(130, 96, 96);
+  display: flex;
+  align-items: center;
+}
+
+.window {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.all-pages-container {
+  height: 100%;
+  display: flex;
+
+  transition: translate;
+  transition-property: transform;
+  transition-duration: 300ms;
+  transition-timing-function: ease-in-out;
+}
+
+.all-pages-container img {
+
+  width: 100%;
+}
+
+.slider {
+  display: flex;
+}
+
+.slider button {
+  width: 30px;
+
+}
