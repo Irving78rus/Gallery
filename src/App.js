@@ -49,27 +49,27 @@ function App({ items }) {
     });
     setFotos([...selectedFotos, ...fotos])
   }
-  const [img, setImg] = useState(null);
-  const [avatar, seAvatar] = useState(null);
-const sendFile =React.useCallback (async()=>{
-  try{
-    const data = new FormData()
-    data.append( 'img',img)
-    data.append('data', data)
-    console.log(img);
-    console.log(data);
-// await axios.post('/',data).then(res=>seAvatar(res.data.path))
-  }
-  catch(error){
+//   const [img, setImg] = useState(null);
+//   const [avatar, seAvatar] = useState(null);
+// const sendFile =React.useCallback (async()=>{
+//   try{
+//     const data = new FormData()
+//     data.append( 'img',img)
+//     data.append('data', data)
+//     console.log(img);
+//     console.log(data);
+//  await axios.post('/',data).then(res=>seAvatar(res.data.path))
+//   }
+//   catch(error){
 
-  }
-},[img])
+//   }
+// },[img])
 
 
 
   return (<div className='App'>
-    <input type="file" onChange={(e) => setImg(e.target.files)} />
-    <button onClick={sendFile}> jnghgdbnm</button>
+    {/* <input type="file" onChange={(e) => setImg(e.target.files)} />
+    <button onClick={sendFile}> Отправить</button> */}
     <img  src={`${avatar}`}   alt='foto'/>
     <div className={modalVisibileted ? "modal " : null} onClick={() => { showModal() }}> </div>
     <div >
