@@ -21,21 +21,33 @@ function App({ items }) {
   const rollReroll = () => {
     setIsSlider(!isSlider)
   }
-  
+  const [sel, setSel] = useState([]);
   const [selectedFotos, setSelectedFotos] = useState([]);
   function hendlerSelect(foto) {
+    console.log(sel);
     if (selectedFotos.includes(foto)) {
+       
+
+    setSel((prev)=>{
+      prev.splice(sel.indexOf(foto.id), 1)
+      return prev
+    })
+
       selectedFotos.splice(selectedFotos.indexOf(foto), 1);
     } else {
+      
+      setSel((prev)=>[...prev, foto.id])
       setSelectedFotos((prev) => [...prev, foto]);
     }
   }
 
   const selectAll = () => {
     setSelectedFotos(fotos.map((item) => item));
+    setSel(fotos.map((item) => item.id))
   };
   const resetAll = () => {
     setSelectedFotos([]);
+    setSel([])
   };
 
   const swap = (selectedFotos, fotos) => {
@@ -55,8 +67,8 @@ function App({ items }) {
       <Button disabled className='buttonReset' isDisable={!selectedFotos.length} onClick={() => { resetAll() }}  >“Сбросить” </Button>
     </div>
     {isSlider
-      ? <Slider fotos={fotos} hendlerSelect={hendlerSelect} />
-      : <Gallery fotos={fotos} hendlerSelect={hendlerSelect} />
+      ? <Slider fotos={fotos} hendlerSelect={hendlerSelect} sel={sel}/>
+      : <Gallery fotos={fotos} hendlerSelect={hendlerSelect} sel={sel}/>
     }
      
       {isSlider

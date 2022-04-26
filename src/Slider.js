@@ -26,7 +26,7 @@ const Slider = ({ fotos, hendlerSelect }) => {
             <div className="main-container">
                 <div className="window">
                     <div className="all-pages-container" style={{transform: `translateX(${offset}px)`}}>
-                        {fotos.map(item => <img key={item.id} src={item.foto_src} onClick={() => {hendlerSelect(item)}} />)}
+                        {fotos.map(item => <img key={item.id} src={item.foto_src} onClick={() => {hendlerSelect(item)}} alt='foto'/>)}
                     </div>
                 </div>
             </div>
