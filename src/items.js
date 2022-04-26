@@ -11,37 +11,37 @@ export const items = [
   {
     id: 1,
     foto_src: foto1,
-    sel:false
+    issel:false
   }, 
   {
     id: 2,
     foto_src: foto2,
-    sel:false
+    issel:false
   },
   {
     id: 3,
     foto_src: foto3,
-    sel:false
+    issel:false
   },
   {
     id: 4,
     foto_src: foto4,
-    sel:false
+    issel:false
   },
   {
     id: 5,
     foto_src: foto5,
-    sel:false
+    issel:false
   },
   {
     id: 6,
     foto_src: foto6,
-    sel:false
+    issel:false
   },
   {
     id: 7,
     foto_src: foto7,
-    sel:false
+    issel:false
   },
   // {    
   //   id: 8,

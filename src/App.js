@@ -24,19 +24,9 @@ function App({ items }) {
   const [sel, setSel] = useState([]);
   const [selectedFotos, setSelectedFotos] = useState([]);
   function hendlerSelect(foto) {
-    console.log(sel);
-    if (selectedFotos.includes(foto)) {
-       
-
-    setSel((prev)=>{
-      prev.splice(sel.indexOf(foto.id), 1)
-      return prev
-    })
-
+    if (selectedFotos.includes(foto)) {                 // setSel(sel.splice(sel.indexOf(foto.id), 1))
       selectedFotos.splice(selectedFotos.indexOf(foto), 1);
-    } else {
-      
-      setSel((prev)=>[...prev, foto.id])
+    } else {                                                  // setSel((prev)=>[...prev, foto.id])
       setSelectedFotos((prev) => [...prev, foto]);
     }
   }
@@ -67,25 +57,25 @@ function App({ items }) {
       <Button disabled className='buttonReset' isDisable={!selectedFotos.length} onClick={() => { resetAll() }}  >“Сбросить” </Button>
     </div>
     {isSlider
-      ? <Slider fotos={fotos} hendlerSelect={hendlerSelect} sel={sel}/>
-      : <Gallery fotos={fotos} hendlerSelect={hendlerSelect} sel={sel}/>
+      ? <Slider fotos={fotos} hendlerSelect={hendlerSelect} sel={sel} />
+      : <Gallery fotos={fotos} hendlerSelect={hendlerSelect} sel={sel} />
     }
-     
-      {isSlider
-        ? <Button onClick={() => { rollReroll() }}>“Развернуть”</Button>
-        : <Button onClick={() => { rollReroll() }}>“Свернуть”</Button>
-      }
-    
+
+    {isSlider
+      ? <Button onClick={() => { rollReroll() }}>“Развернуть”</Button>
+      : <Button onClick={() => { rollReroll() }}>“Свернуть”</Button>
+    }
+
     <div>
       <Button onClick={() => { showModal() }}>“Показать выбранные”</Button>
 
-      {selectedFotos.length && selectedFotos.length < fotos.length 
-      ? <p>Выбрано {selectedFotos.length} картинок из {fotos.length}</p> 
-      : null}
+      {selectedFotos.length && selectedFotos.length < fotos.length
+        ? <p>Выбрано {selectedFotos.length} картинок из {fotos.length}</p>
+        : null}
 
-      {selectedFotos.length && selectedFotos.length === fotos.length 
-      ? <p>Выбраны все {selectedFotos.length} изображений</p> 
-      : null}
+      {selectedFotos.length && selectedFotos.length === fotos.length
+        ? <p>Выбраны все {selectedFotos.length} изображений</p>
+        : null}
 
     </div>
     <Modal showModal={showModal} modalVisibileted={modalVisibileted} selectedFotos={selectedFotos} />
