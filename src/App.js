@@ -55,14 +55,17 @@ function App({ items }) {
     setFotos([...selectedFotos, ...fotos])
     setSelectedFotos([]);
   }
+
+
   //   const [img, setImg] = useState(null);
   //   const [avatar, seAvatar] = useState(null);
   // const sendFile =React.useCallback (async()=>{
   //   try{
-  //     const data = new FormData()
-  //     data.append( 'img',img)
-  //     data.append('data', data)
   //     console.log(img);
+  //     const data = new FormData()
+  //     console.log(data);
+  //     data.append('img', img)
+      
   //     console.log(data);
   //  await axios.post('/',data).then(res=>seAvatar(res.data.path))
   //   }
@@ -70,18 +73,18 @@ function App({ items }) {
 
   //   }
   // },[img])
-
+  
 
 
   return (<div className='App'>
+ 
 
-
-    {/* <input type="file" onChange={(e) => setImg(e.target.files)} />
-    <button onClick={sendFile}> Отправить</button> */}
-    {/* <img  src={`${avatar}`}   alt='foto'/> */}
+    {/* <input type="file" onChange={(e) => setImg(e.target.files[0])} />
+    <button onClick={sendFile}> Отправить</button>
+    <img  src={`${avatar}`}   alt='foto'/> */}
     <div className={modalVisibileted ? "modal z-1" : null}  > </div>
     <div >
-      {console.log(selectedFotos, fotos)}
+       
       <Button disabled isDisable={!selectedFotos.length || selectedFotos.length === fotos.length} onClick={() => { swap(selectedFotos, fotos) }}>Расположить первыми</Button>
       <Button disabled isDisable={selectedFotos.length >= fotos.length} onClick={() => { selectAll() }}>Выбрать всё</Button>
       <Button disabled className='buttonReset' isDisable={!selectedFotos.length} onClick={() => { resetAll() }}  >Сбросить</Button>

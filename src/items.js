@@ -1,12 +1,11 @@
-import foto1 from './img/1.jpeg';
-import foto2 from './img/2.jpeg';
-import foto3 from './img/3.jpeg';
-import foto4 from './img/4.jpeg';
-import foto5 from './img/5.jpeg';
-import foto6 from './img/6.jpeg';
-import foto7 from './img/7.jpeg';
-import foto8 from './img/8.jpeg';
-import foto9 from './img/9.jpeg';
+import foto1 from './img/1.jpg';
+import foto2 from './img/2.jpg';
+import foto3 from './img/3.jpg';
+import foto4 from './img/4.jpg';
+import foto5 from './img/5.jpg';
+import foto6 from './img/6.jpg';
+import foto7 from './img/7.jpg';
+ 
 export const items = [
   {
     id: 1,
@@ -43,14 +42,5 @@ export const items = [
     foto_src: foto7,
     issel:false
   },
-  // {    
-  //   id: 8,
-  //   foto_src: foto8,
-  //   sel:false
-  // },
-  // {
-  //   id: 9,
-  //   foto_src: foto9,
-  //   sel:false
-  // },
+  
 ];
