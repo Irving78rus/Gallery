@@ -1,11 +1,15 @@
 import React from "react";
-
-const Gallery = ({ fotos, hendlerSelect, sel }) => {
+import Checked from "./Checked";
+const Gallery = ({ fotos, hendlerSelect, selectedFotos, modalVisibileted }) => {
   // наработка style={sel.includes(item.id)?{opacity:0.5}:{opacity:1}}
-  
+
   return (
-    <div className="gallery">
-      {fotos.map(item => <img key={item.id} src={item.foto_src} onClick={() => { hendlerSelect(item) }} alt='foto' />)}
+    <div className={modalVisibileted ? "gallery   z-1" : "gallery"} >
+
+      {fotos.map(item => <div className="blockItem" key={item.id}>
+        <img src={item.foto_src} onClick={() => { hendlerSelect(item) }} alt='foto' />
+        {selectedFotos.includes(item) && <Checked />}
+      </div>)}
     </div>
   );
 };

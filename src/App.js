@@ -18,27 +18,32 @@ function App({ items }) {
     setmodalVisibileted(!modalVisibileted)
   }
 
-  const [isSlider, setIsSlider] = useState(true);
+  const [isSlider, setIsSlider] = useState(false);
   const rollReroll = () => {
     setIsSlider(!isSlider)
   }
-  const [sel, setSel] = useState([]);
+
   const [selectedFotos, setSelectedFotos] = useState([]);
+
+
   function hendlerSelect(foto) {
-    if (selectedFotos.includes(foto)) {                 // setSel(sel.splice(sel.indexOf(foto.id), 1))
-      selectedFotos.splice(selectedFotos.indexOf(foto), 1);
-    } else {                                                  // setSel((prev)=>[...prev, foto.id])
+    console.log('click');
+    if (selectedFotos.includes(foto)) {
+      // selectedFotos.splice(selectedFotos.indexOf(foto), 1)  почему это не работало
+      // setSelectedFotos(selectedFotos)
+      setSelectedFotos(selectedFotos.filter(item => item.id != foto.id))
+    } else {
       setSelectedFotos((prev) => [...prev, foto]);
     }
   }
 
   const selectAll = () => {
     setSelectedFotos(fotos.map((item) => item));
-    setSel(fotos.map((item) => item.id))
+
   };
   const resetAll = () => {
     setSelectedFotos([]);
-    setSel([])
+
   };
 
   const swap = (selectedFotos, fotos) => {
@@ -48,48 +53,53 @@ function App({ items }) {
       }
     });
     setFotos([...selectedFotos, ...fotos])
+    setSelectedFotos([]);
   }
-//   const [img, setImg] = useState(null);
-//   const [avatar, seAvatar] = useState(null);
-// const sendFile =React.useCallback (async()=>{
-//   try{
-//     const data = new FormData()
-//     data.append( 'img',img)
-//     data.append('data', data)
-//     console.log(img);
-//     console.log(data);
-//  await axios.post('/',data).then(res=>seAvatar(res.data.path))
-//   }
-//   catch(error){
+  //   const [img, setImg] = useState(null);
+  //   const [avatar, seAvatar] = useState(null);
+  // const sendFile =React.useCallback (async()=>{
+  //   try{
+  //     const data = new FormData()
+  //     data.append( 'img',img)
+  //     data.append('data', data)
+  //     console.log(img);
+  //     console.log(data);
+  //  await axios.post('/',data).then(res=>seAvatar(res.data.path))
+  //   }
+  //   catch(error){
 
-//   }
-// },[img])
+  //   }
+  // },[img])
 
 
 
   return (<div className='App'>
+
+
     {/* <input type="file" onChange={(e) => setImg(e.target.files)} />
     <button onClick={sendFile}> Отправить</button> */}
-    <img  src={`${avatar}`}   alt='foto'/>
-    <div className={modalVisibileted ? "modal " : null} onClick={() => { showModal() }}> </div>
+    {/* <img  src={`${avatar}`}   alt='foto'/> */}
+    <div className={modalVisibileted ? "modal z-1" : null}  > </div>
     <div >
-      <Button isDisable={!selectedFotos.length} onClick={() => { swap(selectedFotos, fotos) }}>“Расположить первыми” </Button>
-      <Button isDisable={selectedFotos.length} onClick={() => { selectAll() }}>“Выбрать всё” </Button>
-      <Button className='buttonReset' isDisable={!selectedFotos.length} onClick={() => { resetAll() }}  >“Сбросить” </Button>
+      {console.log(selectedFotos, fotos)}
+      <Button disabled isDisable={!selectedFotos.length || selectedFotos.length === fotos.length} onClick={() => { swap(selectedFotos, fotos) }}>Расположить первыми</Button>
+      <Button disabled isDisable={selectedFotos.length >= fotos.length} onClick={() => { selectAll() }}>Выбрать всё</Button>
+      <Button disabled className='buttonReset' isDisable={!selectedFotos.length} onClick={() => { resetAll() }}  >Сбросить</Button>
     </div>
     {isSlider
-      ? <Slider fotos={fotos} hendlerSelect={hendlerSelect} sel={sel} />
-      : <Gallery fotos={fotos} hendlerSelect={hendlerSelect} sel={sel} />
+      ? <Slider fotos={fotos} hendlerSelect={hendlerSelect} modalVisibileted={modalVisibileted} selectedFotos={selectedFotos} />
+      : <Gallery fotos={fotos} hendlerSelect={hendlerSelect} modalVisibileted={modalVisibileted} selectedFotos={selectedFotos} />
     }
 
     {isSlider
-      ? <Button onClick={() => { rollReroll() }}>“Развернуть”</Button>
-      : <Button onClick={() => { rollReroll() }}>“Свернуть”</Button>
+      ? <Button onClick={() => { rollReroll() }}>Развернуть</Button>
+      : <Button onClick={() => { rollReroll() }}>Свернуть</Button>
     }
 
     <div>
-      <Button onClick={() => { showModal() }}>“Показать выбранные”</Button>
-
+      {/* disabled  */}
+      <Button disabled isDisable={!selectedFotos.length} onClick={() => { selectedFotos.length && showModal() }}>Показать выбранные</Button>
+      {/* {console.log(selectedFotos.length)} */}
       {selectedFotos.length && selectedFotos.length < fotos.length
         ? <p>Выбрано {selectedFotos.length} картинок из {fotos.length}</p>
         : null}
@@ -97,7 +107,7 @@ function App({ items }) {
       {selectedFotos.length && selectedFotos.length === fotos.length
         ? <p>Выбраны все {selectedFotos.length} изображений</p>
         : null}
-
+ 
     </div>
     <Modal showModal={showModal} modalVisibileted={modalVisibileted} selectedFotos={selectedFotos} />
 
