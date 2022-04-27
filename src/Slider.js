@@ -3,12 +3,12 @@ import Button from './Button';
 import "./App.css";
 import Checked from "./Checked";
 const PAGE_WIDTH = 900
-const maxOffset = -900
+// const maxOffset = -900
 const Slider = ({ fotos, hendlerSelect, selectedFotos, modalVisibileted }) => {
 
 
     const [offset, setOffset] = useState(0)
-    // const [maxOffset, setMaxOffset] = useState((PAGE_WIDTH * (Math.trunc(fotos.length / 3) - 1)))
+    const [maxOffset, setMaxOffset] = useState(-(PAGE_WIDTH * (Math.trunc(fotos.length / 3) - 1)))
 
     const riht = () => {
         setOffset((prev) => {
@@ -39,7 +39,7 @@ const Slider = ({ fotos, hendlerSelect, selectedFotos, modalVisibileted }) => {
                         </div>
                     </div>
                 </div>
-                {/* {console.log(fotos.length, offset, maxOffset)} */}
+                  {console.log(fotos.length, offset, maxOffset)}  
                 {fotos.length > 3 && <Button disabled isDisable={offset < maxOffset} onClick={() => { riht() }}>{`>`}</Button>}
 
             </div>

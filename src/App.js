@@ -18,7 +18,7 @@ function App({ items }) {
     setmodalVisibileted(!modalVisibileted)
   }
 
-  const [isSlider, setIsSlider] = useState(false);
+  const [isSlider, setIsSlider] = useState(true);
   const rollReroll = () => {
     setIsSlider(!isSlider)
   }
