@@ -39,7 +39,7 @@ const Slider = ({ fotos, hendlerSelect, selectedFotos, modalVisibileted }) => {
                         </div>
                     </div>
                 </div>
-                  {console.log(fotos.length, offset, maxOffset)}  
+                  {/* {console.log(fotos.length, offset, maxOffset)}   */}
                 {fotos.length > 3 && <Button disabled isDisable={offset < maxOffset} onClick={() => { riht() }}>{`>`}</Button>}
 
             </div>

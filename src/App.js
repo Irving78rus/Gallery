@@ -5,6 +5,7 @@ import Button from './Button';
 import Gallery from "./Gallery";
 import Modal from "./Modal";
 import Slider from "./Slider";
+ 
 
 function App({ items }) {
 
@@ -57,31 +58,36 @@ function App({ items }) {
   }
 
 
-  //   const [img, setImg] = useState(null);
-  //   const [avatar, seAvatar] = useState(null);
-  // const sendFile =React.useCallback (async()=>{
-  //   try{
-  //     console.log(img);
-  //     const data = new FormData()
-  //     console.log(data);
-  //     data.append('img', img)
+    const [img, setImg] = useState(null);
+    const [avatar, seAvatar] = useState(null);
+  const sendFile =React.useCallback (async()=>{
+    try{
+      console.log(img);
+      const data = new FileReader();
+      console.log(data);
+      data.append('img', img)
       
-  //     console.log(data);
-  //  await axios.post('/',data).then(res=>seAvatar(res.data.path))
-  //   }
-  //   catch(error){
+      console.log(data);
+   await axios.post('/',data).then(res=>seAvatar(res.data.path))
+    }
+    catch(error){
 
-  //   }
-  // },[img])
+    }
+  },[img])
   
-
+  const getWord = (number, first, second, thurd) => {
+    const lastFigure = number % 10;
+    if (lastFigure === 1) return first;
+    if (lastFigure > 1 && lastFigure < 5) return second;
+    else return thurd;
+  };
 
   return (<div className='App'>
- 
+  
 
-    {/* <input type="file" onChange={(e) => setImg(e.target.files[0])} />
+    <input type="file" onChange={(e) => setImg(e.target.files[0])} />
     <button onClick={sendFile}> Отправить</button>
-    <img  src={`${avatar}`}   alt='foto'/> */}
+    <img  src={`${avatar}`}   alt='foto'/>
     <div className={modalVisibileted ? "modal z-1" : null}  > </div>
     <div >
        
@@ -104,7 +110,7 @@ function App({ items }) {
       <Button disabled isDisable={!selectedFotos.length} onClick={() => { selectedFotos.length && showModal() }}>Показать выбранные</Button>
       {/* {console.log(selectedFotos.length)} */}
       {selectedFotos.length && selectedFotos.length < fotos.length
-        ? <p>Выбрано {selectedFotos.length} картинок из {fotos.length}</p>
+        ? <p>{getWord(selectedFotos.length,'Выбрана','Выбрано','Выбрано')} {selectedFotos.length} {getWord(selectedFotos.length,'картинка','картинки','картинок')} из {fotos.length}</p>
         : null}
 
       {selectedFotos.length && selectedFotos.length === fotos.length
