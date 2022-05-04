@@ -1,4 +1,4 @@
-import axios from "axios";
+ 
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Button from './Button';
@@ -8,11 +8,13 @@ import Slider from "./Slider";
  
 
 function App({ items }) {
-
+  const [img, setImg] = useState(null);
+  const [uploadedPhotos, setUploadedPhotos] = useState([]);
   const [fotos, setFotos] = useState([]);
   useEffect(() => {
-    setFotos(items.map(item => item))
-  }, []);
+    setFotos(
+      uploadedPhotos.map(item => item))
+  }, [uploadedPhotos]);
 
   const [modalVisibileted, setmodalVisibileted] = useState(false);
   const showModal = () => {
@@ -32,7 +34,7 @@ function App({ items }) {
     if (selectedFotos.includes(foto)) {
       // selectedFotos.splice(selectedFotos.indexOf(foto), 1)  почему это не работало
       // setSelectedFotos(selectedFotos)
-      setSelectedFotos(selectedFotos.filter(item => item.id != foto.id))
+      setSelectedFotos(selectedFotos.filter(item => item.id !== foto.id))
     } else {
       setSelectedFotos((prev) => [...prev, foto]);
     }
@@ -57,15 +59,6 @@ function App({ items }) {
     setSelectedFotos([]);
   }
 
-
-  //   const [img, setImg] = useState(null);
-  //   const [avatar, seAvatar] = useState(null);
-    
-  //   const sendFile =  ()=>{
-  //   const objurl=URL.createObjectURL(img)
-  //   seAvatar(objurl)
-  // } 
-  
   const getWord = (number, first, second, thurd) => {
     const lastFigure = number % 10;
     if (lastFigure === 1) return first;
@@ -73,15 +66,24 @@ function App({ items }) {
     else return thurd;
   };
 
-  return (<div className='App'>
-  
+ 
+console.log(img);
+  const sendFile = () => {
+    const photoUrl = URL.createObjectURL(img)
+    setUploadedPhotos((prev) => [...prev, {
+      id: img.size,
+      foto_src: photoUrl
+    }]);
 
-    {/* <input type="file" onChange={(e) => setImg(e.target.files[0])} />
-    <button  onClick={ sendFile}> Отправитvь</button>
-    <img  src={`${avatar}`}   alt='foto'/> */}
+  }
+  return (<div className='App'>
+    <input type="file" onChange={(e) => setImg(e.target.files[0])} />
+    <button onClick={sendFile}> Отправитvь</button>
+    
+
     <div className={modalVisibileted ? "modal z-1" : null}  > </div>
     <div >
-       
+
       <Button disabled isDisable={!selectedFotos.length || selectedFotos.length === fotos.length} onClick={() => { swap(selectedFotos, fotos) }}>Расположить первыми</Button>
       <Button disabled isDisable={selectedFotos.length >= fotos.length} onClick={() => { selectAll() }}>Выбрать всё</Button>
       <Button disabled className='buttonReset' isDisable={!selectedFotos.length} onClick={() => { resetAll() }}  >Сбросить</Button>
@@ -101,13 +103,13 @@ function App({ items }) {
       <Button disabled isDisable={!selectedFotos.length} onClick={() => { selectedFotos.length && showModal() }}>Показать выбранные</Button>
       {/* {console.log(selectedFotos.length)} */}
       {selectedFotos.length && selectedFotos.length < fotos.length
-        ? <p>{getWord(selectedFotos.length,'Выбрана','Выбрано','Выбрано')} {selectedFotos.length} {getWord(selectedFotos.length,'картинка','картинки','картинок')} из {fotos.length}</p>
+        ? <p>{getWord(selectedFotos.length, 'Выбрана', 'Выбрано', 'Выбрано')} {selectedFotos.length} {getWord(selectedFotos.length, 'картинка', 'картинки', 'картинок')} из {fotos.length}</p>
         : null}
 
       {selectedFotos.length && selectedFotos.length === fotos.length
         ? <p>Выбраны все {selectedFotos.length} изображений</p>
         : null}
- 
+
     </div>
     <Modal showModal={showModal} modalVisibileted={modalVisibileted} selectedFotos={selectedFotos} />
 
