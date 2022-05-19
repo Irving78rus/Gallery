@@ -1,15 +1,15 @@
 import React  from "react";
 import Button from './Button';
 import "./App.css";
-const Modal = ({ showModal, modalVisibileted, selectedFotos }) => {
+const Modal = ({ showModal, modalVisible, selectedPhotos }) => {
 
     return (
-        <div className={modalVisibileted ? "modalActiv " : "conceal"}> <div>
+        <div className={modalVisible ? "modalActiv " : "conceal"}> <div>
 
             <Button onClick={() => {showModal()}} > x</Button>
         </div>
             <div className='modalWrap  '>
-                {selectedFotos.map(item => <img key={item.id} src={item.foto_src}  />)}
+                {selectedPhotos.map(item => <img key={item.id} src={item.photo_src}  />)}
             </div>
             <div className='modalbtn'>
                 <Button onClick={() => {showModal()}} > “Закрыть”</Button>

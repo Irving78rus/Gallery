@@ -4,7 +4,9 @@
   border: 0;
   box-sizing: border-box;
 }
-
+input[type=file]{
+  display: none;
+}
 .App {
   text-align: center;
   position: relative;
@@ -183,13 +185,51 @@ img:hover {
   justify-content: center;
   flex-wrap: wrap;
 }
-
+.btnDownload:hover{
+  opacity: 0.5;
+}
 .blockItem {
+ 
   width: 300px;
-
-
   position: relative;
 }
+.previewWrapper{
+  border: 1px solid black;
+  height: 150px
+}
+.previewContainer{
+ 
+  display: flex;
+}
+.previewItem{
+ height: 75px;
+  width: 100px;
+  position: relative;
+}
+.previewItemDelete{
+  width: 20px;
+  height: 20px;
+ background-color: rgba(255, 255, 255, 0.301);
+  position: absolute;
+  top: 0;
+  right: 0;
+  
+}
+.previewItemDelete:hover{
+ 
+  opacity: 0.5;
+  cursor: pointer;
+}
+.previewItem img{
+  height: 100%;
+   width:  100%;
+   
+ }
+ .previewItem img:hover{
+  cursor: default;
+   opacity: 1;
+ }
+  
 
 .circle {
   background-color: black;

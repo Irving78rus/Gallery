@@ -4,17 +4,18 @@ import "./App.css";
 import Checked from "./Checked";
 const PAGE_WIDTH = 900;
 // const maxOffset = -900
-const Slider = ({ fotos, hendlerSelect, selectedFotos, modalVisibileted }) => {
+const Slider = ({ photos, handlerSelect, selectedPhotos, modalVisible }) => {
   const [offset, setOffset] = useState(0);
   const [maxOffset, setMaxOffset] = useState(0);
   useEffect(() => {
-    setMaxOffset(-(PAGE_WIDTH * (Math.trunc(fotos.length / 3) - 1)));
-  }, [fotos]);
+    setMaxOffset(-(PAGE_WIDTH * (Math.ceil(photos.length / 3) - 1)));
+  }, [photos]);
    
-  const riht = () => {
+  const right = () => {
     setOffset((prev) => {
+      
       const newOffset = prev - PAGE_WIDTH;
-      return Math.min(newOffset, maxOffset);
+      return Math.max(newOffset, maxOffset);
     });
   };
   const left = () => {
@@ -26,8 +27,8 @@ const Slider = ({ fotos, hendlerSelect, selectedFotos, modalVisibileted }) => {
   };
   return (
     <>
-      <div className={modalVisibileted ? "slider   z-1" : "slider"}>
-        {fotos.length > 3 && (
+      <div className={modalVisible ? "slider   z-1" : "slider"}>
+        {photos.length > 3 && (
           <Button
             disabled
             isDisable={!offset}
@@ -43,28 +44,28 @@ const Slider = ({ fotos, hendlerSelect, selectedFotos, modalVisibileted }) => {
               className="all-pages-container"
               style={{ transform: `translateX(${offset}px)` }}
             >
-              {fotos.map((item) => (
+              {photos.map((item) => (
                 <div className="blockItem" key={item.id}>
                   <img
-                    src={item.foto_src}
+                    src={item.photo_src}
                     onClick={() => {
-                      hendlerSelect(item);
+                      handlerSelect(item);
                     }}
-                    alt="foto"
+                    alt="car"
                   />
-                  {selectedFotos.includes(item) && <Checked />}
+                  {selectedPhotos.includes(item) && <Checked />}
                 </div>
               ))}
             </div>
           </div>
         </div>
-        {/* {console.log(fotos.length, offset, maxOffset)} */}
-        {fotos.length > 3 && (
+      {console.log(  offset, maxOffset)} 
+        {photos.length > 3 && (
           <Button
             disabled
-            isDisable={offset < maxOffset}
+            isDisable={offset <= maxOffset}
             onClick={() => {
-              riht();
+              right();
             }}
           >{`>`}</Button>
         )}

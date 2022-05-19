@@ -1,119 +1,228 @@
- 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
-import Button from './Button';
+import Button from "./Button";
 import Gallery from "./Gallery";
+import Preview from "./Preview";
 import Modal from "./Modal";
 import Slider from "./Slider";
- 
-
-function App({ items }) {
-  const [img, setImg] = useState(null);
-  const [uploadedPhotos, setUploadedPhotos] = useState([]);
-  const [fotos, setFotos] = useState([]);
-  useEffect(() => {
-    setFotos(
-      uploadedPhotos.map(item => item))
-  }, [uploadedPhotos]);
-
-  const [modalVisibileted, setmodalVisibileted] = useState(false);
+import uniqid from "uniqid";
+function App() {
+  const input = useRef(null);
+  const [files, setFiles] = useState(null);
+  const [preview, setPreview] = useState([]);
+  const [photos, setPhotos] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
   const showModal = () => {
-    setmodalVisibileted(!modalVisibileted)
-  }
+    setModalVisible(!modalVisible);
+  };
 
   const [isSlider, setIsSlider] = useState(true);
   const rollReroll = () => {
-    setIsSlider(!isSlider)
-  }
+    setIsSlider(!isSlider);
+  };
 
-  const [selectedFotos, setSelectedFotos] = useState([]);
+  const [selectedPhotos, setSelectedPhotos] = useState([]);
 
-
-  function hendlerSelect(foto) {
-    console.log('click');
-    if (selectedFotos.includes(foto)) {
-      // selectedFotos.splice(selectedFotos.indexOf(foto), 1)  почему это не работало
-      // setSelectedFotos(selectedFotos)
-      setSelectedFotos(selectedFotos.filter(item => item.id !== foto.id))
+  function handlerSelect(photo) {
+    console.log("click");
+    if (selectedPhotos.includes(photo)) {
+      setSelectedPhotos(selectedPhotos.filter((item) => item.id !== photo.id));
     } else {
-      setSelectedFotos((prev) => [...prev, foto]);
+      setSelectedPhotos((prev) => [...prev, photo]);
     }
   }
 
   const selectAll = () => {
-    setSelectedFotos(fotos.map((item) => item));
-
+    setSelectedPhotos(photos.map((item) => item));
   };
   const resetAll = () => {
-    setSelectedFotos([]);
-
+    setSelectedPhotos([]);
   };
 
-  const swap = (selectedFotos, fotos) => {
-    selectedFotos.map(item => {
-      if (fotos.includes(item)) {
-        fotos.splice(fotos.indexOf(item), 1)
+  const swap = (selectedPhotos, photos) => {
+    selectedPhotos.map((item) => {
+      if (photos.includes(item)) {
+        photos.splice(photos.indexOf(item), 1);
       }
     });
-    setFotos([...selectedFotos, ...fotos])
-    setSelectedFotos([]);
-  }
+    setPhotos([...selectedPhotos, ...photos]);
+    setSelectedPhotos([]);
+  };
 
-  const getWord = (number, first, second, thurd) => {
+  const getWord = (number, first, second, three) => {
     const lastFigure = number % 10;
     if (lastFigure === 1) return first;
     if (lastFigure > 1 && lastFigure < 5) return second;
-    else return thurd;
+    else return three;
   };
 
- 
-console.log(img);
-  const sendFile = () => {
-    const photoUrl = URL.createObjectURL(img)
-    setUploadedPhotos((prev) => [...prev, {
-      id: img.size,
-      foto_src: photoUrl
-    }]);
-
-  }
-  return (<div className='App'>
-    <input type="file" onChange={(e) => setImg(e.target.files[0])} />
-    <button onClick={sendFile}> Отправитvь</button>
+  const deleteOnLoad = (photo) => {
     
+    setPreview(preview.filter((item) => item.id !== photo.id));
+  };
 
-    <div className={modalVisibileted ? "modal z-1" : null}  > </div>
-    <div >
-
-      <Button disabled isDisable={!selectedFotos.length || selectedFotos.length === fotos.length} onClick={() => { swap(selectedFotos, fotos) }}>Расположить первыми</Button>
-      <Button disabled isDisable={selectedFotos.length >= fotos.length} onClick={() => { selectAll() }}>Выбрать всё</Button>
-      <Button disabled className='buttonReset' isDisable={!selectedFotos.length} onClick={() => { resetAll() }}  >Сбросить</Button>
-    </div>
-    {isSlider
-      ? <Slider fotos={fotos} hendlerSelect={hendlerSelect} modalVisibileted={modalVisibileted} selectedFotos={selectedFotos} />
-      : <Gallery fotos={fotos} hendlerSelect={hendlerSelect} modalVisibileted={modalVisibileted} selectedFotos={selectedFotos} />
+  const sendFile = () => {
+    setPhotos((prev) => [...preview, ...prev]);
+    setPreview([]);
+  };
+  useEffect(() => {
+    
+    if (files) {
+      files.forEach((file) => {
+        let photoUrl = URL.createObjectURL(file);
+       
+        setPreview((prev) => [
+          {
+            id: uniqid(),
+            photo_src: photoUrl,
+          },
+          ...prev,
+        ]);
+      });
     }
+  }, [files]);
+  
+  const anyfunc = (e) => {
+    setFiles([])
+    setFiles( Array.from(e.target.files));
 
-    {isSlider
-      ? <Button onClick={() => { rollReroll() }}>Развернуть</Button>
-      : <Button onClick={() => { rollReroll() }}>Свернуть</Button>
-    }
+  };
 
-    <div>
-      {/* disabled  */}
-      <Button disabled isDisable={!selectedFotos.length} onClick={() => { selectedFotos.length && showModal() }}>Показать выбранные</Button>
-      {/* {console.log(selectedFotos.length)} */}
-      {selectedFotos.length && selectedFotos.length < fotos.length
-        ? <p>{getWord(selectedFotos.length, 'Выбрана', 'Выбрано', 'Выбрано')} {selectedFotos.length} {getWord(selectedFotos.length, 'картинка', 'картинки', 'картинок')} из {fotos.length}</p>
-        : null}
+  const triggerINput = () => {
+    input.current.click();
+  };
+  return (
+    <div className="App">
+      <input
+        ref={input}
+        type="file"
+        id="file"
+        onChange={(e) => anyfunc(e)}
+        multiple
+        accept=".png,.jpg,.jpeg,"
+      />
+      <button className={'btnDownload'} onClick={triggerINput}> Загрузить фото</button>
 
-      {selectedFotos.length && selectedFotos.length === fotos.length
-        ? <p>Выбраны все {selectedFotos.length} изображений</p>
-        : null}
+      {!!preview.length && (
+        <>
+          <Preview photos={preview} deleteOnLoad={deleteOnLoad} />
+          <button className={'btnDownload'}  onClick={sendFile}> Отправитvь</button>
+        </>
+      )}
+      {!!photos.length && (
+        <div>
+          <div className={modalVisible ? "modal z-1" : null}> </div>
+          <div>
+            <Button
+              disabled
+              isDisable={
+                !selectedPhotos.length ||
+                selectedPhotos.length === photos.length
+              }
+              onClick={() => {
+                swap(selectedPhotos, photos);
+              }}
+            >
+              Расположить первыми
+            </Button>
+            <Button
+              disabled
+              isDisable={selectedPhotos.length >= photos.length}
+              onClick={() => {
+                selectAll();
+              }}
+            >
+              Выбрать всё
+            </Button>
+            <Button
+              disabled
+              className="buttonReset"
+              isDisable={!selectedPhotos.length}
+              onClick={() => {
+                resetAll();
+              }}
+            >
+              Сбросить
+            </Button>
+          </div>
+          {isSlider ? (
+            <Slider
+              photos={photos}
+              handlerSelect={handlerSelect}
+              modalVisible={modalVisible}
+              selectedPhotos={selectedPhotos}
+            />
+          ) : (
+            <Gallery
+              photos={photos}
+              handlerSelect={handlerSelect}
+              modalVisible={modalVisible}
+              selectedPhotos={selectedPhotos}
+            />
+          )}
 
+          {isSlider ? (
+            <Button
+              onClick={() => {
+                rollReroll();
+              }}
+            >
+              Развернуть
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                rollReroll();
+              }}
+            >
+              Свернуть
+            </Button>
+          )}
+
+          <div>
+            {/* disabled  */}
+            <Button
+              disabled
+              isDisable={!selectedPhotos.length}
+              onClick={() => {
+                selectedPhotos.length && showModal();
+              }}
+            >
+              Показать выбранные
+            </Button>
+            {/* {console.log(selectedPhotos.length)} */}
+            {selectedPhotos.length && selectedPhotos.length < photos.length ? (
+              <p>
+                {getWord(
+                  selectedPhotos.length,
+                  "Выбрана",
+                  "Выбрано",
+                  "Выбрано"
+                )}{" "}
+                {selectedPhotos.length}{" "}
+                {getWord(
+                  selectedPhotos.length,
+                  "картинка",
+                  "картинки",
+                  "картинок"
+                )}{" "}
+                из {photos.length}
+              </p>
+            ) : null}
+
+            {selectedPhotos.length &&
+            selectedPhotos.length === photos.length ? (
+              <p>Выбраны все {selectedPhotos.length} изображений</p>
+            ) : null}
+          </div>
+          <Modal
+            showModal={showModal}
+            modalVisible={modalVisible}
+            selectedPhotos={selectedPhotos}
+          />
+        </div>
+      )}
     </div>
-    <Modal showModal={showModal} modalVisibileted={modalVisibileted} selectedFotos={selectedFotos} />
-
-  </div>
   );
 }
 
