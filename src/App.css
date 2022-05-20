@@ -2,10 +2,29 @@
   margin: 0;
   padding: 0;
   border: 0;
-  box-sizing: border-box;
+   
 }
 input[type=file]{
   display: none;
+}
+button {
+  background-color:rgba(45, 45, 164, 0.651);
+  /* background-color: rgb(154, 154, 181); */
+  border: 1px solid black;
+  cursor: pointer;
+  padding: 5px;
+   
+}
+button[disabled]{
+  background-color: rgb(154, 154, 181);
+  opacity: 1;
+  cursor: default;
+}
+button:hover{
+  opacity: 0.5;
+}
+button[disabled]:hover{
+  opacity: 1;
 }
 .App {
   text-align: center;
@@ -20,12 +39,7 @@ input[type=file]{
 
 }
 
-button {
-  background-color: rgb(154, 154, 181);
-  border: 1px solid black;
-  cursor: pointer;
-  padding: 5px;
-}
+
 
 
 img {
