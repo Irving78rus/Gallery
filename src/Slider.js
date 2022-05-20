@@ -4,7 +4,7 @@ import "./App.css";
 import Checked from "./Checked";
 const PAGE_WIDTH = 900;
 // const maxOffset = -900
-const Slider = ({ photos, handlerSelect, selectedPhotos, modalVisible }) => {
+const Slider = ({ photos, handlerSelect, selectedPhotos, modalVisible,deletePhotos }) => {
   const [offset, setOffset] = useState(0);
   const [maxOffset, setMaxOffset] = useState(0);
   useEffect(() => {
@@ -14,13 +14,13 @@ const Slider = ({ photos, handlerSelect, selectedPhotos, modalVisible }) => {
   const right = () => {
     setOffset((prev) => {
       
-      const newOffset = prev - PAGE_WIDTH;
+      const newOffset = prev - PAGE_WIDTH  
       return Math.max(newOffset, maxOffset);
     });
   };
   const left = () => {
     setOffset((prev) => {
-      const newOffset = prev + PAGE_WIDTH;
+      const newOffset = prev + PAGE_WIDTH  
       const minOffset = 0;
       return Math.min(newOffset, minOffset);
     });
@@ -46,6 +46,7 @@ const Slider = ({ photos, handlerSelect, selectedPhotos, modalVisible }) => {
             >
               {photos.map((item) => (
                 <div className="blockItem" key={item.id}>
+                  <div className="previewItemDelete" onClick={( )=>{deletePhotos(item)}}>&times;</div>
                   <img
                     src={item.photo_src}
                     onClick={() => {

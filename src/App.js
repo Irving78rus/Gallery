@@ -57,8 +57,10 @@ function App() {
   };
 
   const deleteOnLoad = (photo) => {
-    
     setPreview(preview.filter((item) => item.id !== photo.id));
+  };
+  const deletePhotos = (photo) => {
+    setPhotos((prev) => prev.filter((item) => item.id !== photo.id));
   };
 
   const sendFile = () => {
@@ -66,11 +68,9 @@ function App() {
     setPreview([]);
   };
   useEffect(() => {
-    
     if (files) {
       files.forEach((file) => {
         let photoUrl = URL.createObjectURL(file);
-       
         setPreview((prev) => [
           {
             id: uniqid(),
@@ -81,11 +81,10 @@ function App() {
       });
     }
   }, [files]);
-  
-  const anyfunc = (e) => {
-    setFiles([])
-    setFiles( Array.from(e.target.files));
 
+  const anyfunc = (e) => {
+    setFiles(Array.from(e.target.files));
+    e.target.value = "";
   };
 
   const triggerINput = () => {
@@ -101,12 +100,18 @@ function App() {
         multiple
         accept=".png,.jpg,.jpeg,"
       />
-      <button className={'btnDownload'} onClick={triggerINput}> Загрузить фото</button>
+      <button className={"btnDownload"} onClick={triggerINput}>
+        {" "}
+        Загрузить фото
+      </button>
 
       {!!preview.length && (
         <>
           <Preview photos={preview} deleteOnLoad={deleteOnLoad} />
-          <button className={'btnDownload'}  onClick={sendFile}> Отправитvь</button>
+          <button className={"btnDownload"} onClick={sendFile}>
+            {" "}
+            Отправитvь
+          </button>
         </>
       )}
       {!!photos.length && (
@@ -151,6 +156,7 @@ function App() {
               handlerSelect={handlerSelect}
               modalVisible={modalVisible}
               selectedPhotos={selectedPhotos}
+              deletePhotos={deletePhotos}
             />
           ) : (
             <Gallery
@@ -158,6 +164,7 @@ function App() {
               handlerSelect={handlerSelect}
               modalVisible={modalVisible}
               selectedPhotos={selectedPhotos}
+              deletePhotos={deletePhotos}
             />
           )}
 
@@ -211,7 +218,7 @@ function App() {
             ) : null}
 
             {selectedPhotos.length &&
-            selectedPhotos.length === photos.length ? (
+              selectedPhotos.length === photos.length ? (
               <p>Выбраны все {selectedPhotos.length} изображений</p>
             ) : null}
           </div>
